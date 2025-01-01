@@ -3,57 +3,80 @@ package com.teomaik.demospring.books;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.teomaik.demospring.authors.Author;
 import com.teomaik.demospring.themes.Theme;
-
 
 public class Book {
 
+	private Integer id;
 	private String title;
-	private String author;
+	private Author author;
 	private String publiser;
 	private int publishYear;
 	private String description;
-	List<Theme> theme = new ArrayList<Theme>();
-	
-	public Book(String title, String author, String publiser, int publishYear, String description, List<Theme> theme) {
-		super();
+	List<Theme> themes = new ArrayList<Theme>();
+
+	public Book(Integer id, String title, Author author, String publiser, int publishYear, String description,
+			List<Theme> theme) {
+		this.id = id;
 		this.title = title;
 		this.author = author;
 		this.publiser = publiser;
 		this.publishYear = publishYear;
-		this.theme = theme;
+		this.themes = theme;
 		this.description = description;
 	}
-	
+
+	public void addTheme(Theme theme) {
+		this.themes.add(theme);
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getAuthor() {
+
+	public Author getAuthor() {
 		return author;
 	}
-	public void setAuthor(String author) {
+
+	public void setAuthor(Author author) {
 		this.author = author;
 	}
+
 	public String getPubliser() {
 		return publiser;
 	}
+
 	public void setPubliser(String publiser) {
 		this.publiser = publiser;
 	}
+
 	public int getPublishYear() {
 		return publishYear;
 	}
+
 	public void setPublishYear(int publishYear) {
 		this.publishYear = publishYear;
 	}
+
 	public List<Theme> getTheme() {
-		return theme;
+		return themes;
 	}
+
 	public void setTheme(List<Theme> theme) {
-		this.theme = theme;
+		this.themes = theme;
 	}
 
 	public String getDescription() {
@@ -64,12 +87,4 @@ public class Book {
 		this.description = description;
 	}
 
-	@Override
-	public String toString() {
-		return "Book [title=" + title + ", author=" + author + ", publiser=" + publiser + ", publishYear=" + publishYear
-				+ ", description=" + description + ", theme=" + theme.toString() + "]";
-	}
-
-	
-	
 }

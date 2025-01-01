@@ -2,15 +2,18 @@ package com.teomaik.demospring.themes;
 
 public class Theme {
 
+    private Integer id;
 	private String name;
 	private String description;
 	
-	public Theme(String name, String description) {
-		super();
+	public Theme(Integer id, String name, String description) {
+		this.id = id;
 		this.name = name;
 		this.description = description;
 	}
-	
+	public Integer getId() {
+		return id;
+	}
 	public String getName() {
 		return name;
 	}
@@ -23,12 +26,6 @@ public class Theme {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	@Override
-	public String toString() {
-		return "Theme [name=" + name + ", description=" + description + "]";
-	}
-	
 	
 	
 }
