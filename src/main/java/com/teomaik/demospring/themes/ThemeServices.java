@@ -18,6 +18,12 @@ public class ThemeServices {
 	}
 
 	public List<Theme> addTheme(Theme theme) {
+		int newId = 1;
+		if(themes.size()>0) {
+			newId = themes.get(themes.size()-1).getId() +1;
+		}
+		
+		theme.setId(newId);
 		themes.add(theme);
 		return themes;
 	}
@@ -27,17 +33,16 @@ public class ThemeServices {
 		return themes;
 	}
 
-	public List<Theme> updateTheme(int id, String name, String description) {
+	public Theme updateTheme(int id, String name, String description) {
 		for (Theme theme : themes) {
 			if (theme.getId() == id) {
 				if (name != null)
 					theme.setName(name);
 				if (description != null)
 					theme.setDescription(description);
-				return themes;
+				return theme;
 			}
 		}
 		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Theme with id " + id + " doesnt exist");
 	}
 }
-
