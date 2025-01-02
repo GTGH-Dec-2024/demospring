@@ -21,13 +21,22 @@ public class BookServices {
 	@Autowired
 	ThemeServices themeServices;
 
+	//TODO replace with HashMap
 	List<Book> books = new ArrayList<Book>();
 
+	//TODO add method getWithID
+	
 	public List<Book> getAllBooks() {
 		return books;
 	}
 
 	public List<Book> addBook(Book book) {
+		int newId = 1;
+		if(books.size()>0) {
+			newId = books.get(books.size()-1).getId() +1;
+		}
+		
+		book.setId(newId);
 		books.add(book);
 		return books;
 	}
@@ -37,7 +46,7 @@ public class BookServices {
 		return books;
 	}
 
-	public List<Book> updateBook(int id, String title, Author author, String publiser, int publishYear,
+	public Book updateBook(int id, String title, Author author, String publiser, int publishYear,
 			String description, List<Theme> theme) {
 		for (Book book : books) {
 			if (book.getId() == id) {
@@ -53,23 +62,37 @@ public class BookServices {
 					book.setDescription(description);
 				if (theme != null)
 					book.setTheme(theme);
-				return books;
+				return book;
 			}
 		}
-		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Course with id " + id + " dosnt exist");
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book with id " + id + " dosnt exist");
 	}
 
-    public List<Book> addTheme(Integer bookId, Integer themeId){
+    public Book addTheme(Integer id, Integer themeId){
         for(Book book :books) {
-            if (book.getId() == bookId){
+            if (book.getId() == id){
                 for(Theme theme: themeServices.getAllThemes()){
                     if (theme.getId() == themeId){
                     	book.addTheme(theme);
                     }
                 }
             }
+            return book;
         }
-        return books;
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book with id " + id + "or Theme with id " + themeId + " dosnt exist");
     }
 
+    public Book changeAuthor(Integer id, Integer authorId){
+        for(Book book :books) {
+            if (book.getId() == id){
+                for(Author author: authorServices.getAllAuthors()){
+                    if (author.getId() == authorId){
+                    	book.setAuthor(author);
+                    }
+                }
+            }
+            return book;
+        }
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book with id " + id + "or Author with id " + authorId + " dosnt exist");
+    }
 }
