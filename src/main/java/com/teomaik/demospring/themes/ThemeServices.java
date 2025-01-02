@@ -11,7 +11,10 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class ThemeServices {
 
+	//TODO replace with HashMap
 	List<Theme> themes = new ArrayList<Theme>();
+	
+	//TODO add method getWithID
 
 	public List<Theme> getAllThemes() {
 		return themes;

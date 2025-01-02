@@ -10,13 +10,22 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class AuthorServices {
 
+	//TODO replace with HashMap
 	List<Author> authors = new ArrayList<Author>();
 
+	//TODO add method getWithID
+	
 	public List<Author> getAllAuthors() {
 		return authors;
 	}
 
 	public List<Author> addAuthor(Author author) {
+		int newId = 1;
+		if(authors.size()>0) {
+			newId = authors.get(authors.size()-1).getId() +1;
+		}
+		
+		author.setId(newId);
 		authors.add(author);
 		return authors;
 	}
@@ -26,7 +35,8 @@ public class AuthorServices {
 		return authors;
 	}
 
-	public List<Author> updateAuthor(int id, String firstName, String lastName, String dateOfBirth) {
+	public Author updateAuthor(int id, String firstName, String lastName, String dateOfBirth) {
+
 		for (Author author : authors) {
 			if (author.getId() == id) {
 				if (firstName != null)
@@ -36,7 +46,7 @@ public class AuthorServices {
 				if (dateOfBirth != null)
 					author.setDateOfBirth(dateOfBirth);
 
-				return authors;
+				return author;
 			}
 		}
 		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Author with id " + id + " doesnt exist");
