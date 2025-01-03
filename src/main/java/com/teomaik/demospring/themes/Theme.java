@@ -1,11 +1,37 @@
 package com.teomaik.demospring.themes;
 
-public class Theme {
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-    private Integer id;
-	private String name;
-	private String description;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "themes")
+public class Theme {
 	
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Or GenerationType.AUTO
+    @JsonIgnore
+    private Integer id;
+
+    @Column(name = "name", nullable = true)
+	private String name;
+
+    @Column(name = "description", nullable = true)
+	private String description;
+
+    // Default constructor for JPA
+    public Theme() {}
+    
+    public Theme (String name, String description) {
+		this.name = name;
+		this.description = description;
+	}
+    
 	public Theme(Integer id, String name, String description) {
 		this.id = id;
 		this.name = name;

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("themes")
+@RequestMapping("/themes")
 public class ThemeController {
 
 	@Autowired
@@ -39,6 +39,11 @@ public class ThemeController {
 		return themeServices.removeTheme(id);
 	}
 
+	@GetMapping("/find")
+	public Theme findThemeByName(@RequestParam String name) {
+		return themeServices.getThemeByName(name);
+	}
+	
 	@PutMapping("/update")
 	public Theme updateTheme(@RequestParam Integer id, @RequestParam(required = false) String name,
 			@RequestParam(required = false) String description) {

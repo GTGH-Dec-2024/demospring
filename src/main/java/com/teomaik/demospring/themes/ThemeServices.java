@@ -1,51 +1,55 @@
 package com.teomaik.demospring.themes;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
 
 @Service
 public class ThemeServices {
 
-	//TODO replace with HashMap
-	List<Theme> themes = new ArrayList<Theme>();
-	
-	//TODO add method getWithID
+	@Autowired ThemeRepository repository;
+
+	// TODO add method getWithID
 
 	public List<Theme> getAllThemes() {
-		return themes;
+		return repository.findAll();
 	}
 
 	public List<Theme> addTheme(Theme theme) {
-		int newId = 1;
-		if(themes.size()>0) {
-			newId = themes.get(themes.size()-1).getId() +1;
-		}
-		
-		theme.setId(newId);
-		themes.add(theme);
-		return themes;
+		repository.save(theme);
+		return repository.findAll();
 	}
 
 	public List<Theme> removeTheme(Integer id) {
-		themes.removeIf(theme -> theme.getId() == id);
-		return themes;
+		repository.deleteById(id);
+		return repository.findAll();
 	}
 
+	public Theme getThemeByName(String name) {
+		return repository.findByName(name);
+
+	}
+	
 	public Theme updateTheme(int id, String name, String description) {
-		for (Theme theme : themes) {
-			if (theme.getId() == id) {
-				if (name != null)
-					theme.setName(name);
-				if (description != null)
-					theme.setDescription(description);
-				return theme;
+		Optional<Theme> optionalTheme = repository.findById(id);
+
+		if (optionalTheme.isPresent()) {
+			Theme existingTheme = optionalTheme.get();
+
+			// Update fields if new values are provided
+			if (name != null && !name.isEmpty()) {
+				existingTheme.setName(name);
 			}
+			if (description != null && !description.isEmpty()) {
+				existingTheme.setDescription(description);
+			}
+
+			// Save and return the updated author
+			return repository.save(existingTheme);
+		} else {
+			throw new RuntimeException("Theme with ID " + id + " not found");
 		}
-		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Theme with id " + id + " doesnt exist");
 	}
 }
