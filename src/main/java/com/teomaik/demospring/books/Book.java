@@ -25,7 +25,7 @@ public class Book {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "book_id", nullable = false)
+	@Column(name = "book_id", nullable = false)
 	private Integer id;
 
 	@Column(name = "title", nullable = false)
@@ -45,13 +45,14 @@ public class Book {
 	private String description;
 
 	@ManyToMany
-    @JoinTable(
-        name = "book_themes_map", // Join table name
-        joinColumns = @JoinColumn(name = "book_id"), // Foreign key for Book
-        inverseJoinColumns = @JoinColumn(name = "theme_id") // Foreign key for Theme
-    )	private Set<Theme> themes;
+	@JoinTable(name = "book_themes_map", // Join table name
+			joinColumns = @JoinColumn(name = "book_id"), // Foreign key for Book
+			inverseJoinColumns = @JoinColumn(name = "theme_id") // Foreign key for Theme
+	)
+	private Set<Theme> themes;
 
-    public Book() {}
+	public Book() {
+	}
 
 	public Book(Integer id, String title, Author author, String publiser, int publishYear, String description,
 			Set<Theme> theme) {
@@ -63,8 +64,10 @@ public class Book {
 //		this.themes = theme;
 		this.description = description;
 	}
-	
-	
+
+	public void deleteTheme(Theme theme) {
+		themes.remove(theme);
+	}
 
 	public Set<Theme> getTheme() {
 		return themes;
@@ -73,6 +76,7 @@ public class Book {
 	public void setTheme(Set<Theme> theme) {
 		this.themes = theme;
 	}
+
 	public void addTheme(Theme theme) {
 		this.themes.add(theme);
 	}
@@ -117,7 +121,6 @@ public class Book {
 		this.publishYear = publishYear;
 	}
 
-
 	public String getDescription() {
 		return description;
 	}
@@ -126,5 +129,4 @@ public class Book {
 		this.description = description;
 	}
 
-	
 }

@@ -108,4 +108,19 @@ public class BookServices {
 		
 	}
 
+    public Book deleteTheme(Integer id, Integer themeId){
+    	Optional<Book> optionalBook = repository.findById(id);
+        Optional<Theme> optTheme = themeRepository.findById(themeId);
+        
+        if (optionalBook.isPresent() && optTheme.isPresent()) {
+        	Book book = optionalBook.get();
+        	Theme theme = optTheme.get();
+        	
+        	book.deleteTheme(theme);;
+	        return repository.save(book);
+        } else {
+	        throw new RuntimeException("Book with ID: " + id + " or Author with ID: "+ themeId +" not found");
+	    }
+		
+	}
 }

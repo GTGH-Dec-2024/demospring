@@ -60,4 +60,10 @@ public class BookController {
 	public Book updateAuthor(@RequestParam Integer id, @RequestParam Integer authorId) {
 		return bookServices.changeAuthor(id, authorId);
 	}
+	
+	@DeleteMapping("/deleteTheme")
+	public Book deleteTheme(@RequestParam Integer id, @RequestParam Integer themeId) {
+		return bookServices.deleteTheme(id, themeId);
+	}
+
 }
