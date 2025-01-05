@@ -2,34 +2,74 @@ package com.teomaik.demospring.books;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.teomaik.demospring.authors.Author;
 import com.teomaik.demospring.themes.Theme;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "books")
 public class Book {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "book_id", nullable = false)
 	private Integer id;
+
+	@Column(name = "title", nullable = false)
 	private String title;
+
+	@ManyToOne
+	@JoinColumn(name = "author_id", nullable = true)
 	private Author author;
+
+	@Column(name = "publiser", nullable = true)
 	private String publiser;
+
+	@Column(name = "publishYear", nullable = true)
 	private int publishYear;
+
+	@Column(name = "description", nullable = true)
 	private String description;
-	List<Theme> themes = new ArrayList<Theme>();
+
+//	@ManyToMany
+//	@JoinColumn(name = "book_id", nullable = true)
+//	private Set<Theme> themes;
+
+    public Book() {}
 
 	public Book(Integer id, String title, Author author, String publiser, int publishYear, String description,
-			List<Theme> theme) {
+			Set<Theme> theme) {
 		this.id = id;
 		this.title = title;
 		this.author = author;
 		this.publiser = publiser;
 		this.publishYear = publishYear;
-		this.themes = theme;
+//		this.themes = theme;
 		this.description = description;
 	}
 
-	public void addTheme(Theme theme) {
-		this.themes.add(theme);
-	}
+//	public Set<Theme> getTheme() {
+//		return themes;
+//	}
+//
+//	public void setTheme(Set<Theme> theme) {
+//		this.themes = theme;
+//	}
+//	public void addTheme(Theme theme) {
+//		this.themes.add(theme);
+//	}
 
 	public Integer getId() {
 		return id;
@@ -71,13 +111,6 @@ public class Book {
 		this.publishYear = publishYear;
 	}
 
-	public List<Theme> getTheme() {
-		return themes;
-	}
-
-	public void setTheme(List<Theme> theme) {
-		this.themes = theme;
-	}
 
 	public String getDescription() {
 		return description;
@@ -87,4 +120,5 @@ public class Book {
 		this.description = description;
 	}
 
+	
 }

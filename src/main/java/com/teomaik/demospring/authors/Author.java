@@ -1,12 +1,18 @@
 package com.teomaik.demospring.authors;
 
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.teomaik.demospring.books.Book;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Version;
 
 @Entity
 @Table(name = "authors")
@@ -14,6 +20,7 @@ public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "author_id", nullable = false)
     private Integer id;
 
     @Column(name = "first_name", nullable = true)
@@ -24,6 +31,11 @@ public class Author {
 
     @Column(name = "date_of_birth", nullable = true)
     private String dateOfBirth;
+    
+    @OneToMany
+	@JoinColumn(name = "author_id")
+    @JsonIgnore
+    private Set<Book> books;
 
     // Default constructor for JPA
     public Author() {}
@@ -66,6 +78,14 @@ public class Author {
 	}
 	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+	}
+
+	public Set<Book> getBooks() {
+		return books;
+	}
+
+	public void setBooks(Set<Book> books) {
+		this.books = books;
 	}
 	
 }

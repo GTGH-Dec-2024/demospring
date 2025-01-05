@@ -2,6 +2,8 @@ package com.teomaik.demospring.books;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.teomaik.demospring.authors.Author;
+import com.teomaik.demospring.authors.AuthorRepository;
 import com.teomaik.demospring.authors.AuthorServices;
 import com.teomaik.demospring.themes.Theme;
 import com.teomaik.demospring.themes.ThemeServices;
@@ -16,40 +19,40 @@ import com.teomaik.demospring.themes.ThemeServices;
 @Service
 public class BookServices {
 
-	@Autowired
-	AuthorServices authorServices;
-	@Autowired
-	ThemeServices themeServices;
+//	@Autowired
+//	AuthorServices authorServices;
+//	@Autowired
+//	ThemeServices themeServices;
 
-	//TODO replace with HashMap
-	List<Book> books = new ArrayList<Book>();
+	@Autowired BookRepository repository;
+	@Autowired AuthorRepository authorRepository;
+
 
 	//TODO add method getWithID
 	
 	public List<Book> getAllBooks() {
-		return books;
+		return repository.findAll();
 	}
 
 	public List<Book> addBook(Book book) {
-		int newId = 1;
-		if(books.size()>0) {
-			newId = books.get(books.size()-1).getId() +1;
-		}
-		
-		book.setId(newId);
-		books.add(book);
-		return books;
+		repository.save(book);
+		return repository.findAll();
+
 	}
 
 	public List<Book> removeBook(Integer id) {
-		books.removeIf(book -> book.getId() == id);
-		return books;
+		repository.deleteById(id);
+		return repository.findAll();
 	}
 
 	public Book updateBook(int id, String title, Author author, String publiser, int publishYear,
-			String description, List<Theme> theme) {
-		for (Book book : books) {
-			if (book.getId() == id) {
+			String description, Set<Theme> theme) {
+		
+		Optional<Book> optionalBook = repository.findById(id);
+        
+        if (optionalBook.isPresent()) {
+            Book book = optionalBook.get();
+
 				if (title != null)
 					book.setTitle(title);
 				if (author != null)
@@ -60,39 +63,45 @@ public class BookServices {
 					book.setPublishYear(publishYear);
 				if (description != null)
 					book.setDescription(description);
-				if (theme != null)
-					book.setTheme(theme);
-				return book;
-			}
-		}
-		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book with id " + id + " dosnt exist");
+//				if (theme != null)
+//					book.setTheme(theme);
+		
+				// Save and return the updated book
+		        return repository.save(book);
+	    } else {
+	        throw new RuntimeException("Book with ID " + id + " not found");
+	    }
 	}
 
-    public Book addTheme(Integer id, Integer themeId){
-        for(Book book :books) {
-            if (book.getId() == id){
-                for(Theme theme: themeServices.getAllThemes()){
-                    if (theme.getId() == themeId){
-                    	book.addTheme(theme);
-                    }
-                }
-            }
-            return book;
-        }
-		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book with id " + id + "or Theme with id " + themeId + " dosnt exist");
-    }
-
+//    public Book addTheme(Integer id, Integer themeId){
+//        for(Book book :books) {
+//            if (book.getId() == id){
+//                for(Theme theme: themeServices.getAllThemes()){
+//                    if (theme.getId() == themeId){
+//                    	book.addTheme(theme);
+//                    }
+//                }
+//            }
+//            return book;
+//        }
+//		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book with id " + id + "or Theme with id " + themeId + " dosnt exist");
+//    }
+//
     public Book changeAuthor(Integer id, Integer authorId){
-        for(Book book :books) {
-            if (book.getId() == id){
-                for(Author author: authorServices.getAllAuthors()){
-                    if (author.getId() == authorId){
-                    	book.setAuthor(author);
-                    }
-                }
-            }
-            return book;
-        }
-		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book with id " + id + "or Author with id " + authorId + " dosnt exist");
-    }
+    	
+		Optional<Book> optionalBook = repository.findById(id);
+        Optional<Author> optAuthor = authorRepository.findById(authorId);
+        
+        if (optionalBook.isPresent() && optAuthor.isPresent()) {
+        	Book book = optionalBook.get();
+        	Author author = optAuthor.get();
+        	
+        	book.setAuthor(author);
+	        return repository.save(book);
+        } else {
+	        throw new RuntimeException("Book with ID: " + id + " or Author with ID: "+ authorId +" not found");
+	    }
+		
+	}
+
 }
