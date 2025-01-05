@@ -51,10 +51,10 @@ public class BookController {
 		return bookServices.updateBook(id, title, author, publiser, publishYear, description, theme);
 	}
 
-//	@PutMapping("/addTheme")
-//	public Book addTheme(@RequestParam Integer id, @RequestParam Integer themeId) {
-//		return bookServices.addTheme(id, themeId);
-//	}
+	@PutMapping("/addTheme")
+	public Book addTheme(@RequestParam Integer id, @RequestParam Integer themeId) {
+		return bookServices.addTheme(id, themeId);
+	}
 
 	@PutMapping("/updateAuthor")
 	public Book updateAuthor(@RequestParam Integer id, @RequestParam Integer authorId) {

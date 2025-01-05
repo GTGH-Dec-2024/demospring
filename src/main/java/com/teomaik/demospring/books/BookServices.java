@@ -14,6 +14,7 @@ import com.teomaik.demospring.authors.Author;
 import com.teomaik.demospring.authors.AuthorRepository;
 import com.teomaik.demospring.authors.AuthorServices;
 import com.teomaik.demospring.themes.Theme;
+import com.teomaik.demospring.themes.ThemeRepository;
 import com.teomaik.demospring.themes.ThemeServices;
 
 @Service
@@ -26,6 +27,7 @@ public class BookServices {
 
 	@Autowired BookRepository repository;
 	@Autowired AuthorRepository authorRepository;
+	@Autowired ThemeRepository themeRepository;
 
 
 	//TODO add method getWithID
@@ -73,20 +75,22 @@ public class BookServices {
 	    }
 	}
 
-//    public Book addTheme(Integer id, Integer themeId){
-//        for(Book book :books) {
-//            if (book.getId() == id){
-//                for(Theme theme: themeServices.getAllThemes()){
-//                    if (theme.getId() == themeId){
-//                    	book.addTheme(theme);
-//                    }
-//                }
-//            }
-//            return book;
-//        }
-//		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book with id " + id + "or Theme with id " + themeId + " dosnt exist");
-//    }
-//
+    public Book addTheme(Integer id, Integer themeId){
+    	Optional<Book> optionalBook = repository.findById(id);
+        Optional<Theme> optTheme = themeRepository.findById(themeId);
+        
+        if (optionalBook.isPresent() && optTheme.isPresent()) {
+        	Book book = optionalBook.get();
+        	Theme theme = optTheme.get();
+        	
+        	book.addTheme(theme);;
+	        return repository.save(book);
+        } else {
+	        throw new RuntimeException("Book with ID: " + id + " or Author with ID: "+ themeId +" not found");
+	    }
+
+    }
+
     public Book changeAuthor(Integer id, Integer authorId){
     	
 		Optional<Book> optionalBook = repository.findById(id);

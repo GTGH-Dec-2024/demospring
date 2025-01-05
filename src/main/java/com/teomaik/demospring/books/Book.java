@@ -13,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -43,9 +44,12 @@ public class Book {
 	@Column(name = "description", nullable = true)
 	private String description;
 
-//	@ManyToMany
-//	@JoinColumn(name = "book_id", nullable = true)
-//	private Set<Theme> themes;
+	@ManyToMany
+    @JoinTable(
+        name = "book_themes_map", // Join table name
+        joinColumns = @JoinColumn(name = "book_id"), // Foreign key for Book
+        inverseJoinColumns = @JoinColumn(name = "theme_id") // Foreign key for Theme
+    )	private Set<Theme> themes;
 
     public Book() {}
 
@@ -59,17 +63,19 @@ public class Book {
 //		this.themes = theme;
 		this.description = description;
 	}
+	
+	
 
-//	public Set<Theme> getTheme() {
-//		return themes;
-//	}
-//
-//	public void setTheme(Set<Theme> theme) {
-//		this.themes = theme;
-//	}
-//	public void addTheme(Theme theme) {
-//		this.themes.add(theme);
-//	}
+	public Set<Theme> getTheme() {
+		return themes;
+	}
+
+	public void setTheme(Set<Theme> theme) {
+		this.themes = theme;
+	}
+	public void addTheme(Theme theme) {
+		this.themes.add(theme);
+	}
 
 	public Integer getId() {
 		return id;
