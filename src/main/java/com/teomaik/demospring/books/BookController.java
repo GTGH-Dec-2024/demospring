@@ -22,6 +22,10 @@ public class BookController {
 
 	@Autowired
 	BookServices bookServices;
+	
+	@Autowired 
+	BookRepository repository;
+
 
 	@GetMapping("/hello")
 	public String hello() {
@@ -66,4 +70,8 @@ public class BookController {
 		return bookServices.deleteTheme(id, themeId);
 	}
 
+	@GetMapping("/findByPubAndYear")
+	public List<Book> findByPubAndYear(@RequestParam String publiser, @RequestParam int publishYear) {
+		return repository.findByPubliserAndPublishYearLessThan(publiser, publishYear);
+	}
 }
