@@ -1,5 +1,6 @@
 package com.teomaik.demospring.authors;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -35,7 +36,7 @@ public class Author {
     @OneToMany
 	@JoinColumn(name = "author_id")
     @JsonIgnore
-    private Set<Book> books;
+    private Set<Book> books = new HashSet<>();
 
     // Default constructor for JPA
     public Author() {}
