@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BookRepository extends JpaRepository<Book, Integer> {
 
-	List<Book> findByPubliserAndPublishYearLessThan(String publiser, int publishYear);
+	List<Book> findByPubliserAndPublishYearLessThanEqual(String publiser, int publishYear);
 	
 }

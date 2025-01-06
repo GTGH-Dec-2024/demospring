@@ -72,6 +72,6 @@ public class BookController {
 
 	@GetMapping("/findByPubAndYear")
 	public List<Book> findByPubAndYear(@RequestParam String publiser, @RequestParam int publishYear) {
-		return repository.findByPubliserAndPublishYearLessThan(publiser, publishYear);
+		return repository.findByPubliserAndPublishYearLessThanEqual(publiser, publishYear);
 	}
 }
