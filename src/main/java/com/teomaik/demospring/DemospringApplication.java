@@ -8,6 +8,13 @@ public class DemospringApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemospringApplication.class, args);
+		System.out.println("Hello");
+		
+		Examples examp = new Examples();
+		examp.JsonSerialization();
+		
+		
+
 	}
 
 }

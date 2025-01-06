@@ -11,8 +11,9 @@ public class Book {
 	private int publishYear;
 	List<String> theme = new ArrayList<String>();
 	
+	public Book() {}
+	
 	public Book(String title, String author, String publiser, int publishYear, List<String> theme) {
-		super();
 		this.title = title;
 		this.author = author;
 		this.publiser = publiser;
