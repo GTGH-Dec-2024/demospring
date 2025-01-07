@@ -47,6 +47,16 @@ public class BookServices {
 		return repository.findAll();
 	}
 
+	public Book findBookById(Integer book_id) {
+		Optional<Book> optionalBook = repository.findById(book_id);
+		if(optionalBook.isPresent()) {
+			return optionalBook.get();
+		} else {
+			System.out.println("Book not found");
+	        throw new RuntimeException("Book with ID " + book_id + " not found");
+	    }
+	}
+	
 	public Book updateBook(int id, String title, Author author, String publiser, int publishYear,
 			String description, Set<Theme> theme) {
 		
