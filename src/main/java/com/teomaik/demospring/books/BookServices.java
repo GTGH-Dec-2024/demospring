@@ -10,6 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.teomaik.demospring.authors.Author;
 import com.teomaik.demospring.authors.AuthorServices;
+import com.teomaik.demospring.exceptions.MyException;
 import com.teomaik.demospring.themes.Theme;
 import com.teomaik.demospring.themes.ThemeServices;
 
@@ -88,11 +89,12 @@ public class BookServices {
                 for(Author author: authorServices.getAllAuthors()){
                     if (author.getId() == authorId){
                     	book.setAuthor(author);
+                    	return book;
                     }
                 }
             }
-            return book;
         }
-		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book with id " + id + "or Author with id " + authorId + " dosnt exist");
+        throw new MyException(HttpStatus.NOT_FOUND, "Book with id " + id + "or Author with id " + authorId + " dosnt exist");
+//		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book with id " + id + "or Author with id " + authorId + " dosnt exist");
     }
 }
