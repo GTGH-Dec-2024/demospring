@@ -4,11 +4,19 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface BookRepository extends JpaRepository<Book, Integer> {
 
     // 1. Find by title
     List<Book> findByTitle(String title);
+    
+    @Query("SELECT b FROM Book b WHERE b.title LIKE %:keyword%")
+    List<Book> findByTitleTest(@Param("keyword") String keyword);
+//    @Query("SELECT b FROM Book b WHERE b.title LIKE %:keyword% AND b.publishYear = :year")
+//    List<Book> findBooksByTitleKeywordAndYear(@Param("keyword") String keyword, @Param("year") int year);
+
 
     // 2. Find by title containing a keyword (case insensitive)
     List<Book> findByTitleContainingIgnoreCase(String keyword);

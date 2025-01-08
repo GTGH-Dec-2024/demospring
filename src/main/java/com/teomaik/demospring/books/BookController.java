@@ -60,6 +60,16 @@ public class BookController {
 	    }
 	}
 	
+	@GetMapping("/test")
+	public ResponseEntity<List<Book>> findByTitleTest(@RequestParam String title) {
+		try {
+			List<Book> book = repository.findByTitleTest(title);
+	        return ResponseEntity.ok(book);
+	    } catch (Exception ex) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+	    }
+	}
+	
 	@PutMapping("/update")
 	public Book updateBook(@RequestParam Integer id, @RequestParam(required = false) String title,
 			@RequestParam(required = false) String publiser, @RequestParam(required = false) int publishYear,
