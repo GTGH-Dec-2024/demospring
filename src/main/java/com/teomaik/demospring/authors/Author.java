@@ -33,8 +33,8 @@ public class Author {
     @Column(name = "date_of_birth", nullable = true)
     private String dateOfBirth;
     
-    @OneToMany
-	@JoinColumn(name = "author_id")
+
+	@OneToMany(mappedBy = "author")
     @JsonIgnore
     private Set<Book> books = new HashSet<>();
 
@@ -89,4 +89,13 @@ public class Author {
 		this.books = books;
 	}
 	
+	public void addBook(Book book) {
+	    books.add(book);         // Add the Book to the Author's collection
+	    book.setAuthor(this);    // Ensure the Book's author is updated
+	}
+
+	public void removeBook(Book book) {
+	    books.remove(book);      // Remove the Book from the Author's collection
+	    book.setAuthor(null);    // Break the association in the Book entity
+	}
 }

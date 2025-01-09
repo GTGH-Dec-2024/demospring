@@ -1,7 +1,5 @@
 package com.teomaik.demospring.books;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import com.teomaik.demospring.authors.Author;
@@ -16,7 +14,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
