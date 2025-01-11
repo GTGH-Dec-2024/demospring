@@ -44,7 +44,7 @@ public class BookController {
 
 	@PutMapping("/update")
 	public Book updateBook(@RequestParam Integer id, @RequestParam(required = false) String title,
-			@RequestParam(required = false) String publiser, @RequestParam(required = false) int publishYear,
+			@RequestParam(required = false) String publiser, @RequestParam(required = false) Integer publishYear,
 			@RequestParam(required = false) String description, @RequestParam(required = false) List<Theme> theme,
 			@RequestParam(required = false) Author author) {
 		return bookServices.updateBook(id, title, author, publiser, publishYear, description, theme);

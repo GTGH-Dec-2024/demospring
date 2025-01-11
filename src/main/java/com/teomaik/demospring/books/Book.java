@@ -12,11 +12,11 @@ public class Book {
 	private String title;
 	private Author author;
 	private String publiser;
-	private int publishYear;
+	private Integer publishYear;
 	private String description;
 	List<Theme> themes = new ArrayList<Theme>();
 
-	public Book(Integer id, String title, Author author, String publiser, int publishYear, String description,
+	public Book(Integer id, String title, Author author, String publiser, Integer publishYear, String description,
 			List<Theme> theme) {
 		this.id = id;
 		this.title = title;
@@ -67,7 +67,7 @@ public class Book {
 		return publishYear;
 	}
 
-	public void setPublishYear(int publishYear) {
+	public void setPublishYear(Integer publishYear) {
 		this.publishYear = publishYear;
 	}
 

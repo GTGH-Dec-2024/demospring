@@ -47,7 +47,7 @@ public class BookServices {
 		return books;
 	}
 
-	public Book updateBook(int id, String title, Author author, String publiser, int publishYear,
+	public Book updateBook(Integer id, String title, Author author, String publiser, Integer publishYear,
 			String description, List<Theme> theme) {
 		for (Book book : books) {
 			if (book.getId() == id) {

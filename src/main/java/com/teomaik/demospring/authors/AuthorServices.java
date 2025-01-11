@@ -35,7 +35,7 @@ public class AuthorServices {
 		return authors;
 	}
 
-	public Author updateAuthor(int id, String firstName, String lastName, String dateOfBirth) {
+	public Author updateAuthor(Integer id, String firstName, String lastName, String dateOfBirth) {
 
 		for (Author author : authors) {
 			if (author.getId() == id) {
