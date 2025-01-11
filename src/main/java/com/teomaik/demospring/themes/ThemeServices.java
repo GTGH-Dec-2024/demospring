@@ -36,7 +36,7 @@ public class ThemeServices {
 		return themes;
 	}
 
-	public Theme updateTheme(int id, String name, String description) {
+	public Theme updateTheme(Integer id, String name, String description) {
 		for (Theme theme : themes) {
 			if (theme.getId() == id) {
 				if (name != null)
